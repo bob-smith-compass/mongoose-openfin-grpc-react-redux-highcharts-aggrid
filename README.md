@@ -1,3 +1,8 @@
+# Layouts API
+
+`npm i --save openfin-layouts`
+
+
 # Hadouken Application Template
 
 A simple unopinionated Hadouken application template. The purpose of this repository is to allow users to get started with Hadouken immediately by providing a development setup that does not require initial configuration. The setup has minimal dependencies and the feature set is intentionally limited. Any further configuration can be achieved by editing the `app.json` file: [Application Config](https://openfin.co/application-config/).

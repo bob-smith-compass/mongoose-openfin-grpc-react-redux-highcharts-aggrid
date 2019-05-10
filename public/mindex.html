@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenFin Template</title>
+</head>
+
+<body>
+    <h1>Hello, world!</h1>
+    <p>This is a template for an OpenFin application.</p>
+    <p>Current version: <span id="of-version"></span></p>
+    
+    <script type="text/javascript">
+        if (typeof fin !== 'undefined') {
+            init();
+        } else {
+            document.querySelector('#of-version').innerText =
+                'The fin API is not available - you are not running in OpenFin.';
+        }
+
+        //once the DOM has loaded and the OpenFin API is ready
+        async function init() {
+            //get a reference to the current Application & Window.
+            const app = await fin.Application.getCurrent();
+            const win = await fin.Window.getCurrent();
+
+            const ofVersion = document.querySelector('#of-version');
+            ofVersion.innerText = await fin.System.getVersion();
+
+            //Only launch new windows from the main window.
+            if (win.identity.name === app.identity.uuid) {
+                // Subscribing to the run-requested events will allow us to
+                // react to secondary launches.  For this app we will launch a
+                // child window when the user first clicks on the desktop icon.
+                app.once('run-requested', async () => {
+                    await fin.Window.create({
+                        name: 'childWindow',
+                        url: location.href,
+                        autoShow: true
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>

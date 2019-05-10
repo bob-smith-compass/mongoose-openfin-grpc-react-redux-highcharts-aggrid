@@ -25,10 +25,32 @@ async function init() {
             await fin.Window.create({
                 name: 'childWindow',
                 url: location.href,
-                defaultWidth: 320,
+                defaultWidth: 200,
                 defaultHeight: 320,
-                autoShow: true
+                autoShow: true,
+                "backgroundColor": "#fff00",
             });
         });
     }
 }
+
+/**
+ * Open another OpenFin window
+ */
+    /* Define a function that will launch a window */
+    async function launchWindow(url) {
+        /* Use the await keyword. The function will wait for the 
+        window object to instantiate before resuming execution */
+        const win = await fin.Window.create({
+            /* Provide initialization options to the new window */
+            name: "OpenFin Getting Started Guide",
+            url: url,
+            defaultWidth: 600,
+            defaultHeight: 400,
+            resizable: false,
+            autoShow: true
+        });
+        /* When the window object is finished building, this method will 
+        cause the Chromium Developer showDeveloperTools to be displayed */
+        await win.showDeveloperTools();
+    }
