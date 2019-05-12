@@ -54,3 +54,8 @@ async function init() {
         cause the Chromium Developer showDeveloperTools to be displayed */
         await win.showDeveloperTools();
     }
+
+    //import the client module
+import * as layouts from "openfin-layouts"
+
+layouts.snapAndDock.undockWindow();
