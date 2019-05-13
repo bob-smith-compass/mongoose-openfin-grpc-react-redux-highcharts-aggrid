@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CRUD</title>
+</head>
+
+<body>
+
+
+    <script>
+        function Create() {
+            var http = new XMLHttpRequest();
+            var url = 'http://localhost:7070/web';
+            var params = 'orem=ipsum&name=binny';
+            http.open('POST', url, true);
+    
+            //Send the proper header information along with the request
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    
+            http.onreadystatechange = function () {//Call a function when the state changes.
+                if (http.readyState == 4 && http.status == 200) {
+                    alert(http.responseText);
+                }
+            }
+            http.send(params);
+            console.log(`Posting to ${url} ...`);
+        }
+    </script>
+    <button onclick="Create()">POST</button>
+</body>
+
+</html>

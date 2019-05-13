@@ -27,13 +27,10 @@ db.once('open', function () {
     // we're connected!
 });
 
+const Cat = mongoose.model('Cat', { name: String, age: Number });
 function Save() {
-
-    const Cat = mongoose.model('Cat', { name: String, age: Number });
-
     const kitty = new Cat({ name: 'From Web API', age: 99 });
     kitty.save().then(() => console.log('meow'));
-
 }
 /**
  * CRUD Web API
@@ -45,9 +42,15 @@ app.get('/cats', (req, res) => {
     console.log(req.url);
 })
 
+app.post('/web', (req, res) => {
+    // Save(); // Save to MongoDB
+    res.send(`FROM WEB`)
+    console.log(req.url);
+})
+
 app.post('/cat', (req, res) => {
     Save(); // Save to MongoDB
-    res.send(`{name: 'Bagira', age: 2 } saved rom Web`)
+    res.send(`{name: 'Bagira', age: 2 } saved from Web`)
     console.log(req.url);
 })
 
