@@ -17,29 +17,38 @@ app.use(cors())
  * https://mongoosejs.com/
  */
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true });
 /**
  * Connected or error
  */
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
+db.once('open', function () {
+    // we're connected!
 });
 
-const Cat = mongoose.model('Cat', { name: String, age: Number });
+function Save() {
 
-const kitty = new Cat({ name: 'Bagira', age: 2 });
-kitty.save().then(() => console.log('meow'));
+    const Cat = mongoose.model('Cat', { name: String, age: Number });
 
+    const kitty = new Cat({ name: 'From Web API', age: 99 });
+    kitty.save().then(() => console.log('meow'));
+
+}
 /**
  * CRUD Web API
  */
 const PORT = 7070;
 
-app.get('/cats', (rec, res) => {
-    res.send({name: 'Bagira', age: 2 })
-    console.log(res.url);
+app.get('/cats', (req, res) => {
+    res.send({ name: 'From Web API', age: 99 })
+    console.log(req.url);
+})
+
+app.post('/cat', (req, res) => {
+    Save(); // Save to MongoDB
+    res.send(`{name: 'Bagira', age: 2 } saved rom Web`)
+    console.log(req.url);
 })
 
 app.listen(PORT, (req, res) => {
@@ -47,7 +56,7 @@ app.listen(PORT, (req, res) => {
 })
 
 /**
- * Uncomment bellow for full CRUD 
+ * Uncomment bellow for full CRUD
  */
 
 // app.use('/api', api)
