@@ -18,13 +18,33 @@ app.use(cors())
  */
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true});
+/**
+ * Connected or error
+ */
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
 
-const Cat = mongoose.model('Cat', { name: String });
+const Cat = mongoose.model('Cat', { name: String, age: Number });
 
-const kitty = new Cat({ name: 'Zildjian' });
+const kitty = new Cat({ name: 'Bagira', age: 2 });
 kitty.save().then(() => console.log('meow'));
 
+/**
+ * CRUD Web API
+ */
+const PORT = 7070;
 
+app.get('/cats', (rec, res) => {
+    res.send({name: 'Bagira', age: 2 })
+    console.log(res.url);
+})
+
+app.listen(PORT, (req, res) => {
+    console.log(`Listening on port ${PORT}`)
+})
 
 /**
  * Uncomment bellow for full CRUD 
